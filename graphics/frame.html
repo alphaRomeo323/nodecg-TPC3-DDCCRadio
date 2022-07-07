@@ -74,13 +74,9 @@
                         opacity: [{ value: 1, duration: 0 }, { value: 0 }],
                         duration: 10000,
                         easing: "linear",
-                        complete: () => {
-                            //guestFrame.classList.add(["hidden"]);
-                        }
                     });
             }
             else{
-                //guestFrame.classList.remove(["hidden"]);
                 anime({
                     targets: guestFrame,
                     opacity: [{ value: 0, duration: 0 }, { value: 1 }],
@@ -96,18 +92,10 @@
                         targets: mainFrame,
                         opacity: [{ value: 1, duration: 0 }, { value: 0 }],
                         duration: 10000,
-                        easing: "linear",
-                        complete: () => {
-                            //Array.prototype.forEach.call(mainFrame, function (element) {
-                                //element.classList.add(["hidden"]);
-                            //});
-                        }
+                        easing: "linear"
                     });
             }
             else{
-                //Array.prototype.forEach.call(mainFrame, function (element) {
-                //    element.classList.remove(["hidden"]);
-                //});
                 anime({
                     targets: mainFrame,
                     opacity: [{ value: 0, duration: 0 }, { value: 1 }],
