@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>frame</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500&display=swap"
+            rel="stylesheet"
+        />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="common.js"></script>
+    </head>
+    <body class="m-0 w-screen h-screen bg-transparent overflow-hidden text-[32px]">
+        <div class="flex flex-row w-full h-12 overflow-hidden gap-4 absolute inset-x-0 bottom-0 mb-4 pl-4">
+            <div class="bg-white px-4 rounded-full align-middle overflow-hidden shadow-2xl">
+                <span class="material-icons">schedule</span>
+                <span id="clock" class="font-jp"></span>
+            </div>
+            <div class="bg-white px-4 rounded-full align-middle overflow-hidden shadow-2xl main-frame">
+                <span class="material-icons">book</span>
+                <span id="season" class="font-jp"></span>
+                </div>
+            <div class="bg-white px-4 rounded-full align-middle overflow-hidden shadow-2xl main-frame">
+                <span class="material-icons">today</span>
+                <span id="onair" class="font-jp"></span>
+                </div>
+            <div class="bg-white px-4 rounded-full align-middle overflow-hidden shadow-2xl main-frame">
+                <span class="material-icons">person</span>
+                <span id="by" class="font-jp"></span>
+                </div>
+            <div class="bg-white px-4 rounded-full align-middle overflow-hidden shadow-2xl" id="guest-frame">
+                <span class="material-icons">people</span>
+                <span id="guest" class="font-jp"></span>
+            </div>
+        </div>
+    </body>
+    <script>
+        const mainRep = nodecg.Replicant("main");
+	    const guestRep = nodecg.Replicant("guest");
+        setInterval(() => {
+            clock(document.getElementById("clock"));
+        }, 1000);
+        nodecg.Replicant("stream").on("change", (newValue) => {
+            const season = document.getElementById("season");
+            const onair = document.getElementById("onair");
+            const by = document.getElementById("by");
+            const guest = document.getElementById("guest");
+            let streamObj;
+            setTimeout(() => {
+                getJSON(newValue, (v) => {
+                    if (v != undefined) {
+                        season.innerText = v.season;
+                        onair.innerText = v.title;
+                        by.innerText = v.personality;
+                        guest.innerText = v.guest;
+                    }
+                });
+            }, 1000);
+        });
+        nodecg.Replicant("hide").on("change", (newValue) => {
+                mainRep.value = newValue;
+                guestRep.value = newValue;
+        });
+
+        guestRep.on("change", newVal => {
+            const guestFrame = document.getElementById("guest-frame");
+            if (newVal == "hide"){
+                anime({
+                        targets: guestFrame,
+                        opacity: [{ value: 1, duration: 0 }, { value: 0 }],
+                        duration: 10000,
+                        easing: "linear",
+                        complete: () => {
+                            //guestFrame.classList.add(["hidden"]);
+                        }
+                    });
+            }
+            else{
+                //guestFrame.classList.remove(["hidden"]);
+                anime({
+                    targets: guestFrame,
+                    opacity: [{ value: 0, duration: 0 }, { value: 1 }],
+                    duration: 10000,
+                    easing: "linear",
+                });
+            }
+        });
+        mainRep.on("change", newVal => {
+            const mainFrame = document.getElementsByClassName("main-frame");
+            if (newVal == "hide"){
+                anime({
+                        targets: mainFrame,
+                        opacity: [{ value: 1, duration: 0 }, { value: 0 }],
+                        duration: 10000,
+                        easing: "linear",
+                        complete: () => {
+                            //Array.prototype.forEach.call(mainFrame, function (element) {
+                                //element.classList.add(["hidden"]);
+                            //});
+                        }
+                    });
+            }
+            else{
+                //Array.prototype.forEach.call(mainFrame, function (element) {
+                //    element.classList.remove(["hidden"]);
+                //});
+                anime({
+                    targets: mainFrame,
+                    opacity: [{ value: 0, duration: 0 }, { value: 1 }],
+                    duration: 10000,
+                    easing: "linear",
+                });
+            }
+        });
+    </script>
+    <style>
+        .font {
+            font-family: "Audiowide", cursive;
+        }
+        .font-jp {
+            font-family: "M PLUS Rounded 1c", sans-serif;
+        }
+    </style>
+</html>

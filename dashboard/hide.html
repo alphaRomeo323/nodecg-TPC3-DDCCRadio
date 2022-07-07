@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+	<section>
+		<p>Switcher</p>
+ 	   <button id="show">show all</button>
+ 	   <button id="guest">hide guest</button>
+	   <button id="hide">hide all</button>
+	</section>
+</body>
+
+<script>
+	const hideRep = nodecg.Replicant("hide");
+	document.getElementById("show").onclick = () => {
+        hideRep.value = "show";
+	}
+	document.getElementById("hide").onclick = () => {
+        hideRep.value = "hide";
+	}
+</script>
+<style>
+	.selector {
+		width: 3em;
+	}
+	button {
+		font-size: xx-large;
+	}
+</style>
+</html>

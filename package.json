@@ -1,0 +1,48 @@
+{
+    "name": "tpc3_ddcc",
+    "version": "1.0.0",
+    "author": "TSPCCCommunity",
+    "license": "MIT",
+    "nodecg": {
+      "compatibleRange": "^1.0.0",
+      "assetCategories": [
+      {
+        "name": "streams",
+        "title": "Streams",
+        "allowedTypes": ["json"]
+      }
+      ],
+      "dashboardPanels": [
+        {
+            "width": "4",
+            "name": "stream",
+            "title": "ddcc stream",
+            "file": "stream.html"
+          },
+          {
+            "width": "2",
+            "name": "time",
+            "title": "time",
+            "file": "time.html"
+          },
+          {
+            "width": "4",
+            "name": "hide",
+            "title": "hide frame",
+            "file": "hide.html"
+          }
+      ],
+      "graphics": [
+        {
+            "file": "frame.html",
+            "width": 1920,
+            "height": 1080
+        },
+        {
+            "file": "logp.html",
+            "width": 1920,
+            "height": 1080
+        }
+      ]
+    }
+  }

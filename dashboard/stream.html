@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DDCC Stream</title>
+</head>
+<body>
+	<div>Press "Reload" to get the asset list.</div>
+	<select id="pulldown"></select>
+	<button id="reload">Reload</button>
+	<button id="apply">Apply</button>
+</body>
+<script>
+	const pulldown = document.getElementById("pulldown");
+	const reload = document.getElementById("reload");
+	const apply = document.getElementById("apply");
+	const stream = nodecg.Replicant("stream");
+	const next = nodecg.Replicant("next");
+	const asset = nodecg.Replicant("assets:streams");
+	apply.onclick = () => {
+		send();
+	}
+	const  run = () => {
+		asset.on('change', newVal => {
+            if(Array.isArray(newVal)) {
+                const arr = [ ...newVal ].sort((a,b) => a.name > b.name ? 1 : -1);
+                for (const assetKey of arr.sort()) {
+                    let option = document.createElement("option");
+                    option.text = assetKey.name;
+                    option.value = assetKey.url;
+                    pulldown.appendChild(option.cloneNode(true));
+                }
+            }
+		});
+	}
+	const send = () => {
+		stream.value = pulldown.selectedOptions[0].value;
+	}
+	reload.onclick = () => {
+		pulldown.innerHTML="";
+		run();
+	}
+	run();
+</script>
+</html>
